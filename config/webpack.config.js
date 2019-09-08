@@ -272,7 +272,7 @@ module.exports = function(webpackEnv) {
         .map((ext) => `.${ext}`)
         .filter((ext) => useTypeScript || !ext.includes("ts")),
       alias: {
-        // Support React Native Web
+        // Support React Native m
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         "react-native": "react-native-web",
       },
@@ -315,49 +315,52 @@ module.exports = function(webpackEnv) {
               options: {
                 formatter: require.resolve("react-dev-utils/eslintFormatter"),
                 eslintPath: require.resolve("eslint"),
-                resolvePluginsRelativeTo: __dirname,
               },
               loader: require.resolve("eslint-loader"),
             },
           ],
           include: paths.appSrc,
         },
+        // {
+        // {
+        // "oneOf" will traverse all following loaders until one will
+        // match the requirements. When no loader matches it will fall
+        // back to the "file" loader at the end of the loader list.
+        // oneOf: [
+        // "url" loader works like "file" loader except that it embeds assets
+        // smaller than specified limit in bytes as data URLs to avoid requests.
+        // A missing `test` is equivalent to a match.
         {
-          // "oneOf" will traverse all following loaders until one will
-          // match the requirements. When no loader matches it will fall
-          // back to the "file" loader at the end of the loader list.
-          oneOf: [
-            // "url" loader works like "file" loader except that it embeds assets
-            // smaller than specified limit in bytes as data URLs to avoid requests.
-            // A missing `test` is equivalent to a match.
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve("url-loader"),
+          options: {
+            limit: 10000,
+            name: "static/media/[name].[hash:8].[ext]",
+          },
+        },
+
+        // Process application JS with Babel.
+        // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+        {
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          include: paths.appSrc,
+          use: [
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve("url-loader"),
-              options: {
-                limit: imageInlineSizeLimit,
-                name: "static/media/[name].[hash:8].[ext]",
-              },
-            },
-            // Process application JS with Babel.
-            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
-            {
-              test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
               loader: require.resolve("babel-loader"),
               options: {
                 customize: require.resolve("babel-preset-react-app/webpack-overrides"),
-
                 plugins: [
                   [
                     require.resolve("babel-plugin-named-asset-import"),
                     {
                       loaderMap: {
                         svg: {
-                          ReactComponent: "@svgr/webpack?-svgo,+titleProp,+ref![path]",
+                          ReactComponent: "@svgr/webpack?-svgo,+ref![path]",
                         },
                       },
                     },
                   ],
+                  "react-hot-loader/babel",
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -367,11 +370,16 @@ module.exports = function(webpackEnv) {
                 compact: isEnvProduction,
               },
             },
-            // Process any JS outside of the app with Babel.
-            // Unlike the application JS, we only compile the standard ES features.
+          ],
+        },
+
+        // Process any JS outside of the app with Babel.
+        // Unlike the application JS, we only compile the standard ES features.
+        {
+          test: /\.(js|mjs)$/,
+          exclude: /@babel(?:\/|\\{1,2})runtime/,
+          use: [
             {
-              test: /\.(js|mjs)$/,
-              exclude: /@babel(?:\/|\\{1,2})runtime/,
               loader: require.resolve("babel-loader"),
               options: {
                 babelrc: false,
@@ -380,9 +388,9 @@ module.exports = function(webpackEnv) {
                 presets: [
                   [require.resolve("babel-preset-react-app/dependencies"), { helpers: true }],
                 ],
+                // plugins: ["react-hot-loader/babel"],
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
-
                 // If an error happens in a package, it's possible to be
                 // because it was compiled. Thus, we don't want the browser
                 // debugger to show the original code. Instead, the code
@@ -390,6 +398,15 @@ module.exports = function(webpackEnv) {
                 sourceMaps: false,
               },
             },
+          ],
+        },
+        {
+          test: /\.js?$/,
+          include: /node_modules/,
+          use: ["react-hot-loader/webpack"],
+        },
+        {
+          oneOf: [
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
             // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -472,6 +489,8 @@ module.exports = function(webpackEnv) {
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
+            // ],
+            // },
           ],
         },
       ],

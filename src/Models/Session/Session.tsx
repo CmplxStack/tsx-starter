@@ -1,6 +1,6 @@
-import { types } from "mobx-state-tree";
+import { types, Instance } from "mobx-state-tree";
 
-const Session = types
+export const Session = types
   .model({
     name: types.maybe(types.string),
     welcomeMessage: "Loading...",
@@ -28,4 +28,4 @@ const Session = types
     },
   }));
 
-export default Session;
+export type ISessionStoreInstance = Instance<typeof Session>;

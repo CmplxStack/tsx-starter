@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Base from "@Components/Base/Base";
+import { BaseComponent } from "@Components/Base";
 
 export default class Landing extends Component {
   render() {
-    return <Base />;
+    return <BaseComponent />;
   }
 }
