@@ -6,13 +6,6 @@ const rootStore = types
   .model({
     [SESSION_STORE]: types.optional(Session, {}),
   })
-  .actions((self) => ({
-    afterAttach() {
-      console.log("--Root Store Was Attached--");
-    },
-    afterCreate() {
-      console.log("--Root Store Was Successfully Created--");
-    },
-  }));
+  .actions((self) => ({}));
 
 export default rootStore;

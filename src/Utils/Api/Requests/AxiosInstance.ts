@@ -1,6 +1,6 @@
 import Axios, { AxiosInstance } from "axios";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === "development" || "test";
 
 const generateAxiosInstance = () => {
   let AxiosConfig = isDev
@@ -15,6 +15,7 @@ const generateAxiosInstance = () => {
       return request;
     },
     (error) => {
+      console.log(error);
       return Promise.reject(error);
     },
   );
@@ -27,6 +28,7 @@ const generateAxiosInstance = () => {
       return response;
     },
     (error) => {
+      console.log(error);
       return Promise.reject(error);
     },
   );
