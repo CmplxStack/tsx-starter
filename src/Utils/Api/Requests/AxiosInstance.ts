@@ -15,20 +15,18 @@ const generateAxiosInstance = () => {
       return request;
     },
     (error) => {
-      console.log(error);
       return Promise.reject(error);
     },
   );
   tempAxiosInstance.interceptors.response.use(
     (response) => {
       //something
-      if (response.status === 200) {
-        return response.data;
-      }
+      // if (response.status === 200) {
+      //   return response.data;
+      // }
       return response;
     },
     (error) => {
-      console.log(error);
       return Promise.reject(error);
     },
   );

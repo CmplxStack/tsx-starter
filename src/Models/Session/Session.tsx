@@ -3,7 +3,7 @@ import { types, Instance } from "mobx-state-tree";
 export const Session = types
   .model({
     name: types.maybe(types.string),
-    welcomeMessage: "Loading...",
+    welcomeMessage: "Welcome...",
     is_done: types.optional(types.boolean, false),
   })
   .volatile((self) => ({}))
@@ -17,15 +17,10 @@ export const Session = types
       self.is_done = true;
     },
     updateWelcomeMessage(message: string) {
+      console.log("message:", message);
       self.welcomeMessage = message;
     },
   }))
-  .actions((self) => ({
-    afterCreate() {
-      let msg = "TS | React | Starter";
-      // Timeout to show proof of afterCreate;
-      setTimeout(() => self.updateWelcomeMessage(msg), 2000);
-    },
-  }));
+  .actions((self) => ({}));
 
 export type ISessionStoreInstance = Instance<typeof Session>;

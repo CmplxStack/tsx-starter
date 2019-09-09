@@ -8,7 +8,13 @@ import { IBaseComponentProps } from "./BaseContainer";
 export class BaseComponent extends React.Component<IBaseComponentProps, any> {
   async componentDidMount() {
     let callResponse = await CustomAxios.getTodoById(1);
+    let responseData = await callResponse.data;
+    let {
+      SESSION_STORE: { updateWelcomeMessage },
+    } = this.props;
+    updateWelcomeMessage(responseData.title);
   }
+
   render() {
     const { welcomeMessage } = this.props[SESSION_STORE];
     const { classes } = this.props;
