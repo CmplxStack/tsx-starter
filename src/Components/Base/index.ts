@@ -1,1 +1,1 @@
-export { BaseContainer as BaseComponent } from "./BaseContainer";
+export { default as BaseComponent } from "./BaseContainer";

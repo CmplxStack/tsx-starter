@@ -9,7 +9,8 @@
       "@Pages": ["Pages"],
       "@Routes": ["Routes"],
       "@Shared": ["Shared"],
-      "@Utils": ["Utils"]
+      "@Utils": ["Utils"],
+      "@Helpers": ["__tests__/Helpers"]
     }
   }
 }

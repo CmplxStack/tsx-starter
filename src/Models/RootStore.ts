@@ -6,6 +6,7 @@ const rootStore = types
   .model({
     [SESSION_STORE]: types.optional(Session, {}),
   })
+
   .actions((self) => ({}));
 
 export default rootStore;

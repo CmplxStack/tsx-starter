@@ -1,3 +1,4 @@
+import "react-hot-loader";
 import React, { ComponentType } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -9,13 +10,20 @@ import { Root } from "@Routes";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import rootStore from "@Models/RootStore";
+import { green, deepOrange } from "@material-ui/core/colors";
+import { CustomAxiosRequests } from "@Utils/Api";
 
 // SESSION.map((store) => makeInspectable(store));
-const ROOT_STORE = rootStore.create();
+const ROOT_STORE = rootStore.create(
+  {},
+  {
+    CustomAxiosRequests,
+  },
+);
 makeInspectable(ROOT_STORE);
-
 const theme = createMuiTheme({
   // Add theme/palette Options
+  palette: { type: "dark", primary: green, secondary: deepOrange },
 });
 
 const renderApp = (Root: ComponentType) => {

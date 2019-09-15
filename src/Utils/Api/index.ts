@@ -1,3 +1,5 @@
-import * as CustomAxios from "./Requests";
+import * as CustomAxiosRequests from "./Requests";
 
-export { CustomAxios };
+export type ICustomAxiosRequests = typeof CustomAxiosRequests;
+
+export { CustomAxiosRequests };

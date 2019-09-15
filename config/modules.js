@@ -65,7 +65,8 @@ function getModules() {
     const ts = require(resolve.sync("typescript", {
       basedir: paths.appNodeModules,
     }));
-    config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile).config;
+    config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile)
+      .config;
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {

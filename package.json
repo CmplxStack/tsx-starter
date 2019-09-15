@@ -12,11 +12,12 @@
   },
   "devDependencies": {
     "@svgr/webpack": "4.3.2",
+    "@types/axios-mock-adapter": "^1.10.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/eslint": "^4.16.8",
     "@types/eslint-plugin-prettier": "^2.2.0",
-    "@types/jest": "^24.0.17",
+    "@types/jest": "^24.0.18",
     "@types/mobx-devtools-mst": "^0.9.0",
     "@types/node": "^12.7.1",
     "@types/prettier": "^1.18.2",
@@ -53,7 +54,7 @@
     "eslint-utils": "^1.4.1",
     "file-loader": "3.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
-    "jest": "24.8.0",
+    "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-enzyme": "^7.1.0",
     "jest-resolve": "24.8.0",
@@ -131,8 +132,9 @@
       "<rootDir>/src/setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.{test.js,test.jsx,test.ts,test.tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
@@ -148,6 +150,7 @@
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "@Helpers(.*)": "<rootDir>/src/__tests__/Helpers$1",
       "@Assets(.*)": "<rootDir>/src/Assets$1",
       "@Components(.*)": "<rootDir>/src/Components$1",
       "@Models(.*)": "<rootDir>/src/Models$1",

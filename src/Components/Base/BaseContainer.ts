@@ -4,7 +4,7 @@ import { WithStyles } from "@material-ui/styles";
 import { BaseHOC } from "@Utils/Functions/HOCs/BaseHOC";
 import { ISessionStoreInstance } from "@Models/Session/Session";
 import { BaseComponentStyles } from "./BaseComponentStyles";
-import { BaseComponent } from "./BaseComponent";
+import { default as BaseComponent } from "./BaseComponent";
 
 export interface IBaseComponentProps
   extends WithStyles<typeof BaseComponentStyles> {
@@ -13,10 +13,12 @@ export interface IBaseComponentProps
 
 export type IBaseCompType = IBaseComponentType<IBaseComponentProps>;
 
-export const BaseContainer = BaseHOC(
+const BaseContainer = BaseHOC(
   true,
   false,
   BaseComponentStyles,
   BaseComponent,
   [SESSION_STORE],
 );
+
+export default BaseContainer;

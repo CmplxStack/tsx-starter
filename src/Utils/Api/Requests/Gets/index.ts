@@ -1,6 +1,16 @@
-import { CustomAxios } from "../AxiosInstance";
+import { AxiosResponse } from "axios";
+import { CustomAxiosInstance } from "../../AxiosInstance";
 
-export const getTodoById = async (id: number) => {
-  const response = await CustomAxios.get(`/todos/${id}`);
-  return response;
+export interface IGetTodo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export const getTodoById: (
+  id: number,
+) => Promise<AxiosResponse<IGetTodo>> = async (id: number) => {
+  return await CustomAxiosInstance.get(`/todos/${id}`);
 };
+export type IGetTodoById = typeof getTodoById;
