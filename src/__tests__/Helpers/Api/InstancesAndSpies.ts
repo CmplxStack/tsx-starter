@@ -2,8 +2,12 @@ import MockAdapter from "axios-mock-adapter";
 import { CustomAxiosInstance } from "@Utils/Api/AxiosInstance";
 import Axios from "axios";
 
-export const createMockAxios = () =>
+export const createMockAxiosAdapter = () =>
   new MockAdapter(CustomAxiosInstance);
+
+export const mockedAxios = CustomAxiosInstance as jest.Mocked<
+  typeof Axios
+>;
 
 export const createAxiosGetSpy = () =>
   jest.spyOn(CustomAxiosInstance, "get");

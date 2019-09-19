@@ -1,28 +1,28 @@
-import { types, Instance, getEnv } from "mobx-state-tree";
-import { flow } from "mobx";
+import { types, Instance, getEnv, flow } from "mobx-state-tree";
 import { ICustomAxiosRequests } from "@Utils/Api";
+import { AxiosResponse } from "axios";
+import { IGetTodo } from "@Utils/Api/Requests";
 
 interface ISessionEnv {
   CustomAxiosRequests: ICustomAxiosRequests;
 }
-
 export const Session = types
   .model({
-    name: types.maybe(types.string),
+    sessionName: types.maybe(types.string),
     welcomeMessage: types.optional(types.string, "Welcome!"),
-    is_done: types.optional(types.boolean, false),
+    isLoading: types.optional(
+      types.enumeration("State", ["pending", "done", "error"]),
+      "pending",
+    ),
   })
   .views((self) => ({
-    status() {
-      return self.is_done ? "Done" : "Not Done";
-    },
-    get webClient() {
-      return getEnv<ISessionEnv>(self).CustomAxiosRequests;
+    get loadingStatus() {
+      return self.isLoading;
     },
   }))
   .actions((self) => ({
-    markDone() {
-      self.is_done = true;
+    updateStatus(newStatus: typeof self.isLoading) {
+      self.isLoading = newStatus;
     },
     updateWelcomeMessage(message: string) {
       self.welcomeMessage = message;
@@ -30,21 +30,25 @@ export const Session = types
   }))
   .actions((self) => ({
     genNewTodo: flow(function* genNewTodo() {
+      self.updateStatus("pending");
       try {
-        console.log("Starting Flow --- genNewTodo");
+        // console.log("Starting Flow --- genNewTodo");
         let num = Math.floor(Math.random() * 200);
-        console.log("Calling getTodoById(num)--- with num:", num);
+        // console.log("Calling getTodoById(num)--- with num:", num);
 
-        const callResponse = yield self.webClient.getTodoById(num);
+        const callResponse: AxiosResponse<IGetTodo> = yield getEnv<
+          ISessionEnv
+        >(self).CustomAxiosRequests.getTodoById(num);
 
         const { data } = callResponse;
-
+        // self.welcomeMessage = data.title;
         self.updateWelcomeMessage(data.title);
-
-        console.log("Finished Flow --- genNewTodo");
+        // console.log("Finished Flow --- genNewTodo");
+        self.updateStatus("done");
       } catch (error) {
         // ... including try/catch error handling
         console.error("Failed to fetch todo", error);
+        self.updateStatus("error");
       }
     }),
   }));

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Base tests Button onClick calls Axios and updates mobx state 1`] = `
+Object {
+  "SESSION_STORE": Object {
+    "isLoading": "pending",
+    "sessionName": undefined,
+    "welcomeMessage": "Welcome!",
+  },
+}
+`;
+
+exports[`Base tests Button onClick calls Axios and updates mobx state 2`] = `
+Array [
+  Object {
+    "op": "replace",
+    "path": "/SESSION_STORE/welcomeMessage",
+    "value": "Mock Todo Title",
+  },
+  Object {
+    "op": "replace",
+    "path": "/SESSION_STORE/isLoading",
+    "value": "done",
+  },
+]
+`;
+
+exports[`Base tests Button onClick calls Axios and updates mobx state 3`] = `
+Array [
+  Object {
+    "SESSION_STORE": Object {
+      "isLoading": "done",
+      "sessionName": undefined,
+      "welcomeMessage": "Mock Todo Title",
+    },
+  },
+]
+`;

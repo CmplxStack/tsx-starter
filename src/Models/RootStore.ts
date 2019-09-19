@@ -1,12 +1,19 @@
-import { types } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotOut,
+  SnapshotIn,
+} from "mobx-state-tree";
 import { Session } from "./Session";
 import { SESSION_STORE } from "@Shared/Constants/Models";
 
-const rootStore = types
-  .model({
-    [SESSION_STORE]: types.optional(Session, {}),
-  })
-
-  .actions((self) => ({}));
-
-export default rootStore;
+const RootStore = types.model({
+  [SESSION_STORE]: types.optional(Session, {}),
+});
+export interface IRootStoreInstance
+  extends Instance<typeof RootStore> {}
+export interface IRootStoreSnapshotOut
+  extends SnapshotOut<typeof RootStore> {}
+export interface IRootStoreSnapshotIn
+  extends SnapshotIn<typeof RootStore> {}
+export { RootStore };

@@ -9,17 +9,24 @@ import { Provider } from "mobx-react";
 import { Root } from "@Routes";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import rootStore from "@Models/RootStore";
+import { RootStore } from "@Models/RootStore";
 import { green, deepOrange } from "@material-ui/core/colors";
 import { CustomAxiosRequests } from "@Utils/Api";
+import { actionLogger } from "mst-middlewares";
+import { addMiddleware } from "mobx-state-tree";
+
+// .. type definitions ...
 
 // SESSION.map((store) => makeInspectable(store));
-const ROOT_STORE = rootStore.create(
+const ROOT_STORE = RootStore.create(
   {},
   {
     CustomAxiosRequests,
   },
 );
+
+addMiddleware(ROOT_STORE, actionLogger);
+
 makeInspectable(ROOT_STORE);
 const theme = createMuiTheme({
   // Add theme/palette Options

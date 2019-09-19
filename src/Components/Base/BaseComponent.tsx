@@ -8,10 +8,12 @@ const BaseComponent = ({
 }: IBaseComponentProps) => (
   <div id="base-component-el">
     <Paper className={classes.paper}>
-      <div className={classes.root}>{welcomeMessage}</div>
+      <div className={classes.root} id="message-el">
+        {welcomeMessage}
+      </div>
       <Grid container>
         <Grid item>
-          <Button id="gen-todo-button" onClick={() => genNewTodo()}>
+          <Button id="gen-todo-button" onClick={genNewTodo}>
             Click Me!
           </Button>
         </Grid>

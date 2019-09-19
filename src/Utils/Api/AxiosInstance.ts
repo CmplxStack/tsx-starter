@@ -11,7 +11,7 @@ const generateAxiosInstance = () => {
   tempAxiosInstance.interceptors.request.use(
     (request) => {
       //something
-      console.log("Request:", request);
+      // console.log("Request:", request);
       return request;
     },
     (error) => {
@@ -20,7 +20,7 @@ const generateAxiosInstance = () => {
   );
   tempAxiosInstance.interceptors.response.use(
     (response) => {
-      console.log("Response:", response);
+      // console.log("Response:", response);
       return response;
     },
     (error) => {
