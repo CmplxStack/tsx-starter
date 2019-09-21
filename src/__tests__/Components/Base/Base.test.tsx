@@ -97,21 +97,18 @@ describe("Base tests", () => {
       </Provider>
     );
 
+    fullWrapper = mount(<RootComponent />);
+
     onSnapshot(ROOT_STORE, (snapshot) => {
       snapshots.push(snapshot);
     });
-
     onPatch(ROOT_STORE, (patch) => {
       patches.push(patch);
     });
 
-    fullWrapper = mount(<RootComponent />);
-
     let baseComponent = fullWrapper.find("BaseComponent");
     expect(baseComponent).toExist();
-    let genTodoButton = await baseComponent
-      .find("#gen-todo-button")
-      .find("button");
+    let genTodoButton = await baseComponent.find("#gen-todo-button").find("button");
     expect(genTodoButton).toExist();
     let messageElement = baseComponent.find("#message-el");
     expect(messageElement).toExist();
@@ -124,11 +121,11 @@ describe("Base tests", () => {
     await expect(ROOT_STORE).toMatchSnapshot();
     // or.....
     // await expect(await getSnapshot(ROOT_STORE)).toMatchSnapshot();
-    await expect(patches).toMatchSnapshot();
-    await expect(snapshots).toMatchSnapshot();
+    expect(patches).toMatchSnapshot();
+    expect(snapshots).toMatchSnapshot();
     // must be after expect(ROOT_STORE).toMatchSnapshot();
-    await expect(messageElement).toHaveText(MockTodoResponse.title);
+    expect(messageElement).toHaveText(MockTodoResponse.title);
 
-    await fullWrapper.unmount();
+    fullWrapper.unmount();
   });
 });

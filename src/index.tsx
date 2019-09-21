@@ -15,9 +15,6 @@ import { CustomAxiosRequests } from "@Utils/Api";
 import { actionLogger } from "mst-middlewares";
 import { addMiddleware } from "mobx-state-tree";
 
-// .. type definitions ...
-
-// SESSION.map((store) => makeInspectable(store));
 const ROOT_STORE = RootStore.create(
   {},
   {
